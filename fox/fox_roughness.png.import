@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cr38itvtbswfm"
+path.s3tc="res://.godot/imported/fox_roughness.png-674dd6ac1bed544c37dc15bf664ef38d.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "56b20448eaa1d1c097db8f53cb585e36"
+}
+
+[deps]
+
+source_file="res://fox/fox_roughness.png"
+dest_files=["res://.godot/imported/fox_roughness.png-674dd6ac1bed544c37dc15bf664ef38d.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
