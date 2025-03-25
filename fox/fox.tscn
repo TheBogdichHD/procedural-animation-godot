@@ -1,9 +1,13 @@
-[gd_scene load_steps=15 format=4 uid="uid://paa3xogftuk8"]
+[gd_scene load_steps=20 format=4 uid="uid://paa3xogftuk8"]
 
 [ext_resource type="Texture2D" uid="uid://cpqkkee4nooaq" path="res://fox/fox_material_0_diffuse.jpg" id="1_dn5dw"]
+[ext_resource type="Script" uid="uid://n1t532i140ot" path="res://fox/fox.gd" id="1_rcdwv"]
 [ext_resource type="Texture2D" uid="uid://cr38itvtbswfm" path="res://fox/fox_roughness.png" id="2_3wosx"]
 [ext_resource type="Texture2D" uid="uid://diirv6jbxpoug" path="res://fox/fox_material_0_normal.jpg" id="3_8kbpf"]
-[ext_resource type="Texture2D" uid="uid://d0s0lx6tnkc7j" path="res://world/textures/prototype/dark/texture_01.png" id="4_3wosx"]
+[ext_resource type="Script" uid="uid://df7j0ab7lmhoy" path="res://addons/libik/script/pole_bone_constraint.gd" id="4_8kbpf"]
+[ext_resource type="Script" uid="uid://245i5r1ruru7" path="res://fox/step_ray.gd" id="6_ls0ew"]
+[ext_resource type="Script" uid="uid://d2l3r34tvukx5" path="res://fox/ik_effector.gd" id="6_rcdwv"]
+[ext_resource type="Script" uid="uid://ccdwqa537ctu" path="res://fox/step_target_container.gd" id="7_bcctc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4bkwp"]
 resource_name = "material_0.001"
@@ -206,9 +210,14 @@ bind/41/name = &"claws_f.R"
 bind/41/bone = -1
 bind/41/pose = Transform3D(-0.997549, 0.0039582, 0.0698648, 0.0699769, 0.0565876, 0.995942, -1.13659e-05, 0.99839, -0.0567261, -0.0440757, -0.129979, -0.000444594)
 
+[sub_resource type="SphereMesh" id="SphereMesh_ls0ew"]
+radius = 0.02
+height = 0.04
+
 [sub_resource type="Animation" id="Animation_bi07a"]
 resource_name = "Animation"
 length = 8.5
+loop_mode = 1
 tracks/0/type = "rotation_3d"
 tracks/0/imported = true
 tracks/0/enabled = true
@@ -937,10 +946,11 @@ _data = {
 &"RESET": SubResource("Animation_4j04y")
 }
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8kbpf"]
-albedo_texture = ExtResource("4_3wosx")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8kbpf"]
 
 [node name="Fox" type="Node3D"]
+script = ExtResource("1_rcdwv")
+move_speed = 0.75
 
 [node name="Fox" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0444122, 0, 0.0262296)
@@ -1268,33 +1278,82 @@ blend_shapes/blink = 0.0
 
 [node name="GodotIK" type="GodotIK" parent="Fox/Fox/Skeleton3D"]
 
-[node name="EffectorTail" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK"]
+[node name="TailEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK"]
+bone_name = "tail_05"
 bone_idx = 10
 chain_length = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0900121, 0.120274, -0.41691)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0055121, 0.109534, -0.388898)
 
-[node name="EffectorBL" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/TailEffector"]
+mesh = SubResource("SphereMesh_ls0ew")
+
+[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/TailEffector"]
+bone_idx = 9
+script = ExtResource("4_8kbpf")
+metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
+
+[node name="BackLeftEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+bone_name = "claws_b.L"
 bone_idx = 16
-chain_length = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0629575, 0.000442632, -0.0875569)
+chain_length = 5
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0899146, 0.00914481, -0.0901879)
+top_level = true
+script = ExtResource("6_rcdwv")
+step_target = NodePath("../../../StepTargetContainer/BackLeftRay/BackLeftStepTarget")
+adjacent_target = NodePath("../BackRightEffector")
+opposite_target = NodePath("../FrontRightEffector")
 
-[node name="EffectorBR" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/BackLeftEffector"]
+mesh = SubResource("SphereMesh_ls0ew")
+
+[node name="BackRightEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+bone_name = "claws_b.R"
 bone_idx = 22
-chain_length = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0464641, 0.0108263, -0.0585897)
+chain_length = 5
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0015878, 0.010021, -0.0644941)
+top_level = true
+script = ExtResource("6_rcdwv")
+step_target = NodePath("../../../StepTargetContainer/BackRightRay/BackRightStepTarget")
+adjacent_target = NodePath("../BackLeftEffector")
+opposite_target = NodePath("../FrontLeftEffector")
 
-[node name="EffectorFL" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/BackRightEffector"]
+mesh = SubResource("SphereMesh_ls0ew")
+
+[node name="FrontLeftEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+bone_name = "claws_f.L"
 bone_idx = 36
-chain_length = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208119, 0.0257741, 0.131001)
+chain_length = 5
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0881622, 0.0109715, 0.118452)
+top_level = true
+script = ExtResource("6_rcdwv")
+step_target = NodePath("../../../StepTargetContainer/FrontLeftRay/FrontLeftStepTarget")
+adjacent_target = NodePath("../FrontRightEffector")
+opposite_target = NodePath("../BackRightEffector")
 
-[node name="EffectorFR" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/FrontLeftEffector"]
+mesh = SubResource("SphereMesh_ls0ew")
+
+[node name="FrontRightEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+bone_name = "claws_f.R"
 bone_idx = 42
-chain_length = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0424052, 0.0261382, 0.187341)
+chain_length = 5
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0044122, 0.0073993, 0.161947)
+top_level = true
+script = ExtResource("6_rcdwv")
+step_target = NodePath("../../../StepTargetContainer/FrontRightRay/FrontRightStepTarget")
+adjacent_target = NodePath("../FrontLeftEffector")
+opposite_target = NodePath("../BackLeftEffector")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/FrontRightEffector"]
+mesh = SubResource("SphereMesh_ls0ew")
 
 [node name="LookAtModifier3D" type="LookAtModifier3D" parent="Fox/Fox/Skeleton3D"]
-target_node = NodePath("../../../../CSGBox3D")
+target_node = NodePath("../../../../MeshInstance3D")
 bone_name = "head"
 bone = 26
 forward_axis = 2
@@ -1306,11 +1365,97 @@ primary_damp_threshold = 1.0
 secondary_limit_angle = 1.74533
 secondary_damp_threshold = 1.0
 
+[node name="SpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Fox/Fox/Skeleton3D"]
+setting_count = 2
+settings/0/root_bone_name = "Ear.L"
+settings/0/root_bone = 28
+settings/0/end_bone_name = "Ear.L"
+settings/0/end_bone = 28
+settings/0/extend_end_bone = true
+settings/0/end_bone/direction = 6
+settings/0/end_bone/length = 0.1
+settings/0/center_from = 0
+settings/0/individual_config = false
+settings/0/rotation_axis = 3
+settings/0/radius/value = 0.02
+settings/0/radius/damping_curve = null
+settings/0/stiffness/value = 0.5
+settings/0/stiffness/damping_curve = null
+settings/0/drag/value = 0.4
+settings/0/drag/damping_curve = null
+settings/0/gravity/value = 0.0
+settings/0/gravity/damping_curve = null
+settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/enable_all_child_collisions = true
+settings/0/exclude_collision_count = 0
+settings/1/root_bone_name = "Ear.R"
+settings/1/root_bone = 29
+settings/1/end_bone_name = "Ear.R"
+settings/1/end_bone = 29
+settings/1/extend_end_bone = true
+settings/1/end_bone/direction = 6
+settings/1/end_bone/length = 0.1
+settings/1/center_from = 0
+settings/1/individual_config = false
+settings/1/rotation_axis = 3
+settings/1/radius/value = 0.02
+settings/1/radius/damping_curve = null
+settings/1/stiffness/value = 0.5
+settings/1/stiffness/damping_curve = null
+settings/1/drag/value = 0.4
+settings/1/drag/damping_curve = null
+settings/1/gravity/value = 0.0
+settings/1/gravity/damping_curve = null
+settings/1/gravity/direction = Vector3(0, -1, 0)
+settings/1/enable_all_child_collisions = true
+settings/1/exclude_collision_count = 0
+
+[node name="StepTargetContainer" type="Node3D" parent="Fox/Fox"]
+script = ExtResource("7_bcctc")
+
+[node name="BackLeftRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0385302, 0.484705, -0.158658)
+target_position = Vector3(0, -0.5, 0)
+script = ExtResource("6_ls0ew")
+step_target = NodePath("BackLeftStepTarget")
+
+[node name="BackLeftStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/BackLeftRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.472017, 0)
+
+[node name="BackRightRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0556012, 0.484106, -0.0924943)
+target_position = Vector3(0, -0.5, 0)
+script = ExtResource("6_ls0ew")
+step_target = NodePath("BackRightStepTarget")
+
+[node name="BackRightStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/BackRightRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.471935, 0)
+
+[node name="FrontLeftRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0446192, 0.480416, 0.0896469)
+target_position = Vector3(0, -0.5, 0)
+script = ExtResource("6_ls0ew")
+step_target = NodePath("FrontLeftStepTarget")
+
+[node name="FrontLeftStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/FrontLeftRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.470384, 0)
+
+[node name="FrontRightRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.043959, 0.482819, 0.141035)
+target_position = Vector3(0, -0.5, 0)
+script = ExtResource("6_ls0ew")
+step_target = NodePath("FrontRightStepTarget")
+
+[node name="FrontRightStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/FrontRightRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.478111, 0)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Fox"]
+process_mode = 4
 libraries = {
 &"": SubResource("AnimationLibrary_byqp7")
 }
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.296284, -0.435968, 2.37519)
-material_override = SubResource("StandardMaterial3D_8kbpf")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.465591, -0.127411, 4.46769)
+visible = false
+mesh = SubResource("CapsuleMesh_8kbpf")
