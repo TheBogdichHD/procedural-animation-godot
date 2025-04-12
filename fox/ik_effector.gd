@@ -1,25 +1,41 @@
 extends GodotIKEffector
 
 @export var step_target: Node3D
-@export var step_distance: float = 0.2
+@export var step_distance := 0.15
 
-@export var adjacent_target: Node3D
-@export var opposite_target: Node3D
+@export var adjacent_target: GodotIKEffector
+@export var opposite_target: GodotIKEffector
 
-var is_stepping := false
+@export var step_curve: Curve2D
+
+
+var stepping_progress := 0.0
+var allow_neighbor_step: bool:
+	get:
+		return stepping_progress <= 0.0 or stepping_progress > 0.5
+
 
 func _process(_delta):
-	#print(abs(global_position.distance_to(step_target.global_position)))
-	if !is_stepping && !adjacent_target.is_stepping && abs(global_position.distance_to(step_target.global_position)) > step_distance:
-		step()
-		opposite_target.step()
+	var predicted_target = step_target.global_position
+	if stepping_progress:
+		return
+	if global_position.distance_to(predicted_target) < step_distance:
+		return
+	if adjacent_target.allow_neighbor_step:
+		step(predicted_target)
 
-func step():
-	var target_pos = step_target.global_position
-	var half_way = (global_position + step_target.global_position) / 2
-	is_stepping = true
-	
+
+func curve_tween(t: float, from_pos: Vector3, target_pos: Vector3) -> void:
+	var curve_pos := step_curve.samplef(t * step_curve.point_count)
+	var floor_pos := from_pos.lerp(target_pos, curve_pos.x)
+	var lift_height := 0.1
+	var final_pos := floor_pos + Vector3.UP * curve_pos.y * lift_height
+	global_position = final_pos
+	stepping_progress = t
+
+
+func step(target_pos: Vector3):
+	stepping_progress = 0.01
 	var t = get_tree().create_tween()
-	t.tween_property(self, "global_position", half_way + owner.basis.y - Vector3(0,1,0), 0.1)
-	t.tween_property(self, "global_position", target_pos, 0.1)
-	t.tween_callback(func(): is_stepping = false)
+	t.tween_method(curve_tween.bind(global_position, target_pos), 0.0, 1.0, 0.6).set_ease(Tween.EASE_OUT)#.set_trans(Tween.TRANS_QUAD)
+	t.tween_callback(func(): stepping_progress = 0.0)

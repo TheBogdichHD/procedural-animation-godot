@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cm7fs2awxj5cl"]
+[gd_scene load_steps=14 format=3 uid="uid://cm7fs2awxj5cl"]
 
 [ext_resource type="Texture2D" uid="uid://d0s0lx6tnkc7j" path="res://world/textures/prototype/dark/texture_01.png" id="1_6xmxd"]
 [ext_resource type="PackedScene" uid="uid://paa3xogftuk8" path="res://fox/fox.tscn" id="2_tcf2h"]
 [ext_resource type="Texture2D" uid="uid://c1p6arxerdsh3" path="res://world/textures/prototype/purple/texture_01.png" id="3_4717r"]
+[ext_resource type="PackedScene" uid="uid://d0213is7yxabb" path="res://world/terrain.blend" id="4_mmdvd"]
+[ext_resource type="Shader" uid="uid://dbgggq26e70dy" path="res://world/terrain.gdshader" id="5_fn3g3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
 albedo_texture = ExtResource("1_6xmxd")
@@ -31,14 +33,19 @@ albedo_texture = ExtResource("3_4717r")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tcf2h"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sc4t8"]
+render_priority = 0
+shader = ExtResource("5_fn3g3")
+
 [node name="World" type="Node3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.971454, 0.237228, 0, -0.237228, 0.971454, 0.109495, 0.829786, 3.06384)
-
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
+process_mode = 4
+visible = false
 material_override = SubResource("StandardMaterial3D_tcf2h")
 use_collision = true
+collision_layer = 5
+collision_mask = 7
 size = Vector3(10, 10, 10)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D2"]
@@ -48,11 +55,12 @@ operation = 2
 use_collision = true
 size = Vector3(8, 6, 8)
 
-[node name="Fox" parent="." instance=ExtResource("2_tcf2h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00146905, -0.0265661)
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGBox3D2"]
+transform = Transform3D(-0.122666, 0, -0.992448, 0, 1, 0, 0.992448, 0, -0.122666, -0.358506, 0, 0.643384)
+polygon = PackedVector2Array(0, 0, -0.186856, -0.0019533, 2.22616, 0.49457, 2.3518, 0.00288671)
 
-[node name="LookAtModifier3D" parent="Fox/Fox/Fox/Skeleton3D" index="3"]
-target_node = NodePath("../../../../../MeshInstance3D")
+[node name="Fox" parent="." instance=ExtResource("2_tcf2h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.631364, 0.644126)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tcf2h")
@@ -65,4 +73,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0205175, 0.603216, 3.34011)
 material_override = SubResource("StandardMaterial3D_h5o24")
 mesh = SubResource("CapsuleMesh_tcf2h")
 
-[editable path="Fox"]
+[node name="terrain" parent="." instance=ExtResource("4_mmdvd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75226, -0.832665, 0.903682)
+
+[node name="Plane" parent="terrain" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_sc4t8")
+
+[node name="StaticBody3D" parent="terrain/Plane" index="0"]
+collision_layer = 5
+collision_mask = 7
+
+[editable path="terrain"]
