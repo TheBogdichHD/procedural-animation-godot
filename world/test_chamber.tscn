@@ -29,8 +29,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0201805, -0.0210124, -0.00
 use_collision = true
 collision_layer = 5
 collision_mask = 7
-polygon = PackedVector2Array(-1.29231, -0.413458, -1.5841, 1.55664, 0.497463, 0.733904, 3.79513, 2.45163, 5.67588, -0.52046)
+polygon = PackedVector2Array(-1.29231, -0.413458, -1.5841, 1.55664, 0.497463, 0.733904, 1.89653, 1.49019, 3.28504, -0.0123022)
 depth = 4.05
 
 [node name="Fox" parent="." instance=ExtResource("1_q16wy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.415764, 1.11087, -0.091073)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.654781, 1.11087, -0.745523)
+rotation_speed = 2.0

@@ -42,6 +42,11 @@ func _input(event) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		_camera_input_direction = event.screen_relative * mouse_sensitivity
+	if event is InputEventMouseButton:
+		if event.is_action("scroll_up"):
+			%SpringArm3D.spring_length -= 0.01
+		if event.is_action("scroll_down"):
+			%SpringArm3D.spring_length += 0.01
 
 
 func _physics_process(delta: float) -> void:
@@ -76,13 +81,18 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_body_rotation():
-	var front_normal : Vector3 = ((fl_leg_ray.ground_normal + fr_leg_ray.ground_normal)).normalized()
-	var back_normal : Vector3 = ((bl_leg_ray.ground_normal + br_leg_ray.ground_normal)).normalized()
+	var front_normal: Vector3 = ((fl_leg_ray.ground_normal + fr_leg_ray.ground_normal)).normalized()
+	var back_normal: Vector3 = ((bl_leg_ray.ground_normal + br_leg_ray.ground_normal)).normalized()
+	
 	back_normal = (back_normal + front_normal).normalized()
+	
 	var front_side := front_normal.cross(-_skin.global_basis.z)
 	var back_side := back_normal.cross(-_skin.global_basis.z)
+	
 	var front_forward := -front_side.cross(front_normal)
+	
 	var front := Basis(front_side, front_forward, front_side.cross(front_forward)).orthonormalized()
 	var back := Basis(-back_side, back_side.cross(back_normal), back_normal).orthonormalized()
+	
 	front_rotation_bone.global_basis = Basis(front_rotation_bone.global_basis.get_rotation_quaternion().slerp(front.get_rotation_quaternion(), 0.04))
 	back_rotation_bone.global_basis = Basis(back_rotation_bone.global_basis.get_rotation_quaternion().slerp(back.get_rotation_quaternion(), 0.04))

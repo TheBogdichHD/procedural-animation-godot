@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cr38itvtbswfm"
-path.s3tc="res://.godot/imported/fox_roughness.png-674dd6ac1bed544c37dc15bf664ef38d.s3tc.ctex"
+uid="uid://cpqkkee4nooaq"
+path.s3tc="res://.godot/imported/fox_material_0_diffuse.jpg-c80b95b4298f47ee628dbf551999468d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "56b20448eaa1d1c097db8f53cb585e36"
+"md5": "65fe8c258e135d84890beec9b105d177"
 }
 
 [deps]
 
-source_file="res://fox/fox_roughness.png"
-dest_files=["res://.godot/imported/fox_roughness.png-674dd6ac1bed544c37dc15bf664ef38d.s3tc.ctex"]
+source_file="res://fox/source/fox_material_0_diffuse.jpg"
+dest_files=["res://.godot/imported/fox_material_0_diffuse.jpg-c80b95b4298f47ee628dbf551999468d.s3tc.ctex"]
 
 [params]
 
