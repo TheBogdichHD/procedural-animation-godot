@@ -26,6 +26,8 @@ window/vsync/vsync_mode=0
 
 folder_colors={
 "res://addons/": "gray",
+"res://components/": "red",
+"res://dog/": "purple",
 "res://fox/": "orange",
 "res://world/": "green"
 }

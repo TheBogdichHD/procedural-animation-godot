@@ -1,15 +1,15 @@
 [gd_scene load_steps=25 format=4 uid="uid://paa3xogftuk8"]
 
 [ext_resource type="Texture2D" uid="uid://cpqkkee4nooaq" path="res://fox/source/fox_material_0_diffuse.jpg" id="1_dn5dw"]
-[ext_resource type="Script" uid="uid://n1t532i140ot" path="res://fox/fox.gd" id="1_rcdwv"]
+[ext_resource type="Script" uid="uid://n1t532i140ot" path="res://components/player_controller.gd" id="1_rcdwv"]
 [ext_resource type="Texture2D" uid="uid://cr38itvtbswfm" path="res://fox/source/fox_roughness.png" id="2_3wosx"]
-[ext_resource type="Script" uid="uid://bdxd55rvfm0h0" path="res://fox/fox_gait_controller.gd" id="2_pf4w5"]
+[ext_resource type="Script" uid="uid://bdxd55rvfm0h0" path="res://components/gait_controller.gd" id="2_pf4w5"]
 [ext_resource type="Texture2D" uid="uid://diirv6jbxpoug" path="res://fox/source/fox_material_0_normal.jpg" id="3_8kbpf"]
 [ext_resource type="Script" uid="uid://df7j0ab7lmhoy" path="res://addons/libik/script/pole_bone_constraint.gd" id="4_8kbpf"]
-[ext_resource type="Script" uid="uid://245i5r1ruru7" path="res://fox/step_ray.gd" id="6_ls0ew"]
-[ext_resource type="Script" uid="uid://d2l3r34tvukx5" path="res://fox/ik_effector.gd" id="6_rcdwv"]
-[ext_resource type="Script" uid="uid://ccdwqa537ctu" path="res://fox/step_target_container.gd" id="7_bcctc"]
-[ext_resource type="Curve2D" uid="uid://bx3wvikel2l2k" path="res://fox/step_curve_2d.tres" id="7_e7v14"]
+[ext_resource type="Script" uid="uid://245i5r1ruru7" path="res://components/step_ray.gd" id="6_ls0ew"]
+[ext_resource type="Script" uid="uid://d2l3r34tvukx5" path="res://components/ik_effector.gd" id="6_rcdwv"]
+[ext_resource type="Script" uid="uid://ccdwqa537ctu" path="res://components/step_target_container.gd" id="7_bcctc"]
+[ext_resource type="Curve2D" uid="uid://bx3wvikel2l2k" path="res://components/step_curve_2d.tres" id="7_e7v14"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bcctc"]
 radius = 0.1
