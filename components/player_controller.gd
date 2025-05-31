@@ -28,7 +28,7 @@ var _gravity := -10
 
 @onready var _camera_pivot: Node3D = %CameraPivot
 @onready var _camera: Camera3D = %Camera3D
-@onready var _skin: Node3D = %Fox
+@onready var _skin: Node3D = %Body
 @onready var _skeleton: Skeleton3D = %Skeleton3D
 
 
@@ -79,6 +79,8 @@ func _physics_process(delta: float) -> void:
 	
 	_update_body_rotation()
 
+@export var to_adjust = false
+@onready var adjustment = Quaternion(Vector3(0, 1, 0), deg_to_rad(-90)) if to_adjust else 1
 
 func _update_body_rotation():
 	var front_normal: Vector3 = ((fl_leg_ray.ground_normal + fr_leg_ray.ground_normal)).normalized()
@@ -94,5 +96,5 @@ func _update_body_rotation():
 	var front := Basis(front_side, front_forward, front_side.cross(front_forward)).orthonormalized()
 	var back := Basis(-back_side, back_side.cross(back_normal), back_normal).orthonormalized()
 	
-	front_rotation_bone.global_basis = Basis(front_rotation_bone.global_basis.get_rotation_quaternion().slerp(front.get_rotation_quaternion(), 0.04))
-	back_rotation_bone.global_basis = Basis(back_rotation_bone.global_basis.get_rotation_quaternion().slerp(back.get_rotation_quaternion(), 0.04))
+	front_rotation_bone.global_basis = Basis(front_rotation_bone.global_basis.get_rotation_quaternion().slerp(front.get_rotation_quaternion() * adjustment, 0.04))
+	back_rotation_bone.global_basis = Basis(back_rotation_bone.global_basis.get_rotation_quaternion().slerp(back.get_rotation_quaternion() * adjustment, 0.04))

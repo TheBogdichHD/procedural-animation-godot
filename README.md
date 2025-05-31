@@ -1,6 +1,6 @@
 # 🦊 Procedural Animation in Godot
 
-Procedural animation of fox in Godot 4.4
+Procedural animation for quadruped creatures in Godot 4.4
 
 ## Credits
 

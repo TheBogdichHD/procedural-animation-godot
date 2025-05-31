@@ -17,6 +17,7 @@ mono_crash.*.json
 
 # Temporary files
 *.tmp
+~*.dll
 
 # Visual Studio cache directory
 .vs/

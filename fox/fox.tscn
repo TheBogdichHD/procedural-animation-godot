@@ -1227,13 +1227,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, 0.14317, 0)
 shape = SubResource("CapsuleShape3D_bcctc")
 debug_color = Color(0.42, 0.48432, 0.937434, 0.42)
 
-[node name="Fox" type="Node3D" parent="."]
+[node name="Body" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0444122, 0, 0.0262296)
 
-[node name="Fox" type="Node3D" parent="Fox"]
+[node name="Fox" type="Node3D" parent="Body"]
 
-[node name="Skeleton3D" type="Skeleton3D" parent="Fox/Fox"]
+[node name="Skeleton3D" type="Skeleton3D" parent="Body/Fox"]
 unique_name_in_owner = true
 bones/0/name = "Base"
 bones/0/parent = -1
@@ -1537,52 +1537,52 @@ bones/42/position = Vector3(-2.96859e-09, 0.022154, -1.35624e-08)
 bones/42/rotation = Quaternion(0.221844, -0.0170635, -0.0277789, 0.974537)
 bones/42/scale = Vector3(1, 1, 1)
 
-[node name="BackRotationBone" type="BoneAttachment3D" parent="Fox/Fox/Skeleton3D"]
+[node name="BackRotationBone" type="BoneAttachment3D" parent="Body/Fox/Skeleton3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 8.81073e-13, 0, 0, 0, 1, 8.81073e-13, -1, 0, -2.23142e-17, 0.269187, 5.35417e-09)
-rotation_edit_mode = 1
 bone_name = "Spine_03"
 bone_idx = 3
 override_pose = true
 
-[node name="RayCast3D" type="RayCast3D" parent="Fox/Fox/Skeleton3D/BackRotationBone"]
-transform = Transform3D(1, 8.80744e-13, 2.40937e-14, 8.81073e-13, -0.999626, -0.0273459, 0, 0.0273459, -0.999626, 0, 5.58794e-09, -0.00247869)
+[node name="RayCast3D" type="RayCast3D" parent="Body/Fox/Skeleton3D/BackRotationBone"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.73887e-08, -0.99961, -0.0279216, -2.44099e-09, -0.0279216, 0.99961, 0, 5.58794e-09, -0.00247869)
+debug_shape_custom_color = Color(1, 0, 0, 1)
 
-[node name="FrontRotationBone" type="BoneAttachment3D" parent="Fox/Fox/Skeleton3D"]
+[node name="FrontRotationBone" type="BoneAttachment3D" parent="Body/Fox/Skeleton3D"]
 unique_name_in_owner = true
-transform = Transform3D(-1, -8.74228e-08, 0, 0, 0, 1, -8.74228e-08, 1, 0, -2.23155e-17, 0.269187, 5.35417e-09)
-rotation_edit_mode = 1
+transform = Transform3D(-1, -1.50996e-07, -6.60024e-15, 0, -4.37114e-08, 1, -1.50996e-07, 1, 4.37114e-08, -2.23155e-17, 0.269187, 5.35417e-09)
 bone_name = "Spine_04"
 bone_idx = 23
 override_pose = true
 
-[node name="RayCast3D" type="RayCast3D" parent="Fox/Fox/Skeleton3D/FrontRotationBone"]
-transform = Transform3D(1, -8.74228e-08, -8.74228e-08, -8.74228e-08, -1, 0, -8.74228e-08, 7.64274e-15, -1, 0, 5.58794e-09, -0.00247869)
+[node name="RayCast3D" type="RayCast3D" parent="Body/Fox/Skeleton3D/FrontRotationBone"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 5.58794e-09, -0.00247869)
+debug_shape_custom_color = Color(0, 0, 1, 1)
 
-[node name="upper teeth" type="BoneAttachment3D" parent="Fox/Fox/Skeleton3D"]
-transform = Transform3D(1, 6.35657e-08, -2.38476e-08, -6.35654e-08, 1, -8.9407e-08, 2.38476e-08, 0, 1, 0.000293534, 0.270293, 0.307014)
+[node name="upper teeth" type="BoneAttachment3D" parent="Body/Fox/Skeleton3D"]
+transform = Transform3D(1, 4.67672e-07, -1.74844e-07, -4.67672e-07, 1, 5.96046e-08, 1.74844e-07, -1.78814e-07, 1, 0.000293488, 0.270293, 0.307014)
 bone_name = "upper teeth"
 bone_idx = 30
 
-[node name="upper teeth" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/upper teeth"]
+[node name="upper teeth" type="MeshInstance3D" parent="Body/Fox/Skeleton3D/upper teeth"]
 mesh = SubResource("ArrayMesh_m2sqa")
 skeleton = NodePath("")
 
-[node name="Object_0_003" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D"]
+[node name="Object_0_003" type="MeshInstance3D" parent="Body/Fox/Skeleton3D"]
 mesh = SubResource("ArrayMesh_xq32v")
 skin = SubResource("Skin_4sf2y")
 blend_shapes/breath = 0.0
 blend_shapes/blink = 0.0
 "blend_shapes/eye turn" = 0.0
 
-[node name="GodotIK" type="GodotIK" parent="Fox/Fox/Skeleton3D" node_paths=PackedStringArray("back_left", "back_right", "front_left", "front_right")]
+[node name="GodotIK" type="GodotIK" parent="Body/Fox/Skeleton3D" node_paths=PackedStringArray("back_left", "back_right", "front_left", "front_right")]
 script = ExtResource("2_pf4w5")
 back_left = NodePath("BackLeftEffector")
 back_right = NodePath("BackRightEffector")
 front_left = NodePath("FrontLeftEffector")
 front_right = NodePath("FrontRightEffector")
 
-[node name="BackLeftEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
+[node name="BackLeftEffector" type="GodotIKEffector" parent="Body/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
 bone_name = "claws_b.L"
 bone_idx = 16
 chain_length = 5
@@ -1596,25 +1596,25 @@ adjacent_target = NodePath("../BackRightEffector")
 opposite_target = NodePath("../FrontRightEffector")
 step_curve = ExtResource("7_e7v14")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/BackLeftEffector"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/Fox/Skeleton3D/GodotIK/BackLeftEffector"]
 visible = false
 mesh = SubResource("SphereMesh_ls0ew")
 
-[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/BackLeftEffector"]
+[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/BackLeftEffector"]
 bone_name = "foot_b.L"
 bone_idx = 15
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/BackLeftEffector"]
+[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/BackLeftEffector"]
 bone_name = "shin_b.L"
 bone_idx = 14
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="BackRightEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
+[node name="BackRightEffector" type="GodotIKEffector" parent="Body/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
 bone_name = "claws_b.R"
 bone_idx = 22
 chain_length = 5
@@ -1628,25 +1628,25 @@ adjacent_target = NodePath("../BackLeftEffector")
 opposite_target = NodePath("../FrontLeftEffector")
 step_curve = ExtResource("7_e7v14")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/BackRightEffector"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/Fox/Skeleton3D/GodotIK/BackRightEffector"]
 visible = false
 mesh = SubResource("SphereMesh_ls0ew")
 
-[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/BackRightEffector"]
+[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/BackRightEffector"]
 bone_name = "foot_b.R"
 bone_idx = 21
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/BackRightEffector"]
+[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/BackRightEffector"]
 bone_name = "shin_b.R"
 bone_idx = 20
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="FrontLeftEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
+[node name="FrontLeftEffector" type="GodotIKEffector" parent="Body/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
 bone_name = "claws_f.L"
 bone_idx = 36
 chain_length = 5
@@ -1660,25 +1660,25 @@ adjacent_target = NodePath("../FrontRightEffector")
 opposite_target = NodePath("../BackRightEffector")
 step_curve = ExtResource("7_e7v14")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/FrontLeftEffector"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/Fox/Skeleton3D/GodotIK/FrontLeftEffector"]
 visible = false
 mesh = SubResource("SphereMesh_ls0ew")
 
-[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/FrontLeftEffector"]
+[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/FrontLeftEffector"]
 bone_name = "foot_f.L"
 bone_idx = 35
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/FrontLeftEffector"]
+[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/FrontLeftEffector"]
 bone_name = "shin_f.L"
 bone_idx = 34
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="FrontRightEffector" type="GodotIKEffector" parent="Fox/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
+[node name="FrontRightEffector" type="GodotIKEffector" parent="Body/Fox/Skeleton3D/GodotIK" node_paths=PackedStringArray("step_target", "step_target_ray", "adjacent_target", "opposite_target")]
 bone_name = "claws_f.R"
 bone_idx = 42
 chain_length = 5
@@ -1692,25 +1692,25 @@ adjacent_target = NodePath("../FrontLeftEffector")
 opposite_target = NodePath("../BackLeftEffector")
 step_curve = ExtResource("7_e7v14")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Fox/Fox/Skeleton3D/GodotIK/FrontRightEffector"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/Fox/Skeleton3D/GodotIK/FrontRightEffector"]
 visible = false
 mesh = SubResource("SphereMesh_ls0ew")
 
-[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/FrontRightEffector"]
+[node name="PoleBoneConstraint" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/FrontRightEffector"]
 bone_name = "foot_f.R"
 bone_idx = 41
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Fox/Fox/Skeleton3D/GodotIK/FrontRightEffector"]
+[node name="PoleBoneConstraint2" type="GodotIKConstraint" parent="Body/Fox/Skeleton3D/GodotIK/FrontRightEffector"]
 bone_name = "shin_f.R"
 bone_idx = 40
 script = ExtResource("4_8kbpf")
 pole_direction = Vector3(0, 0, -0.665)
 metadata/_custom_type_script = "uid://df7j0ab7lmhoy"
 
-[node name="LookAtModifier3D" type="LookAtModifier3D" parent="Fox/Fox/Skeleton3D"]
+[node name="LookAtModifier3D" type="LookAtModifier3D" parent="Body/Fox/Skeleton3D"]
 active = false
 target_node = NodePath("../../../../MeshInstance3D")
 bone_name = "head"
@@ -1724,7 +1724,7 @@ primary_damp_threshold = 1.0
 secondary_limit_angle = 1.74533
 secondary_damp_threshold = 1.0
 
-[node name="EarsSpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Fox/Fox/Skeleton3D"]
+[node name="EarsSpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Body/Fox/Skeleton3D"]
 setting_count = 2
 settings/0/root_bone_name = "Ear.L"
 settings/0/root_bone = 28
@@ -1769,7 +1769,7 @@ settings/1/gravity/direction = Vector3(0, -1, 0)
 settings/1/enable_all_child_collisions = true
 settings/1/exclude_collision_count = 0
 
-[node name="TailSpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Fox/Fox/Skeleton3D"]
+[node name="TailSpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Body/Fox/Skeleton3D"]
 setting_count = 1
 settings/0/root_bone_name = "tail_01"
 settings/0/root_bone = 6
@@ -1791,10 +1791,10 @@ settings/0/gravity/direction = Vector3(0, -1, 0)
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
-[node name="StepTargetContainer" type="Node3D" parent="Fox/Fox"]
+[node name="StepTargetContainer" type="Node3D" parent="Body/Fox"]
 script = ExtResource("7_bcctc")
 
-[node name="BackLeftRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+[node name="BackLeftRay" type="RayCast3D" parent="Body/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.039, 0.15, -0.072738)
 target_position = Vector3(0, -0.6, 0)
@@ -1804,11 +1804,11 @@ hit_back_faces = false
 script = ExtResource("6_ls0ew")
 step_target = NodePath("BackLeftStepTarget")
 
-[node name="BackLeftStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/BackLeftRay"]
+[node name="BackLeftStepTarget" type="Marker3D" parent="Body/Fox/StepTargetContainer/BackLeftRay"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.472017, 0)
 
-[node name="BackRightRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+[node name="BackRightRay" type="RayCast3D" parent="Body/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0556012, 0.15, -0.0924943)
 target_position = Vector3(0, -0.6, 0)
@@ -1818,11 +1818,11 @@ hit_back_faces = false
 script = ExtResource("6_ls0ew")
 step_target = NodePath("BackRightStepTarget")
 
-[node name="BackRightStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/BackRightRay"]
+[node name="BackRightStepTarget" type="Marker3D" parent="Body/Fox/StepTargetContainer/BackRightRay"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.471935, 0)
 
-[node name="FrontLeftRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+[node name="FrontLeftRay" type="RayCast3D" parent="Body/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0446192, 0.15, 0.120698)
 target_position = Vector3(0, -0.6, 0)
@@ -1832,11 +1832,11 @@ hit_back_faces = false
 script = ExtResource("6_ls0ew")
 step_target = NodePath("FrontLeftStepTarget")
 
-[node name="FrontLeftStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/FrontLeftRay"]
+[node name="FrontLeftStepTarget" type="Marker3D" parent="Body/Fox/StepTargetContainer/FrontLeftRay"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.470384, 0)
 
-[node name="FrontRightRay" type="RayCast3D" parent="Fox/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
+[node name="FrontRightRay" type="RayCast3D" parent="Body/Fox/StepTargetContainer" node_paths=PackedStringArray("step_target")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.043959, 0.15, 0.122917)
 target_position = Vector3(0, -0.6, 0)
@@ -1846,11 +1846,11 @@ hit_back_faces = false
 script = ExtResource("6_ls0ew")
 step_target = NodePath("FrontRightStepTarget")
 
-[node name="FrontRightStepTarget" type="Marker3D" parent="Fox/Fox/StepTargetContainer/FrontRightRay"]
+[node name="FrontRightStepTarget" type="Marker3D" parent="Body/Fox/StepTargetContainer/FrontRightRay"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.478111, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Fox"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
 libraries = {
 &"": SubResource("AnimationLibrary_byqp7")
 }
